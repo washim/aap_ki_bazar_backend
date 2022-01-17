@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'style.css' %}" />
+{% endblock %}
+
+{% block sidebar %}
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item menu-open">
+        <a href="#" class="nav-link active">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{% url 'listorders' %}" class="nav-link purchases">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>List Orders</p>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+$(function() {
+    if (document.location.pathname == "/terminal/purchase/") {
+        $('.purchases').addClass('active');
+    }
+    if (document.location.pathname == "/terminal/sales/") {
+        $('.sales').addClass('active');
+    }
+    if (document.location.pathname == "/terminal/stocks/") {
+        $('.stocks').addClass('active');
+    }
+    if (document.location.pathname == "/terminal/products/") {
+        $('.products').addClass('active');
+    }
+    if (document.location.pathname == "/terminal/dues/") {
+        $('.dues').addClass('active');
+    }
+});
+</script>
+{% endblock %}
