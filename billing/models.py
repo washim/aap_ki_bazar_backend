@@ -1,5 +1,19 @@
 from django.db import models
 
+INVOICE_STATUS = (
+    ('processed', 'Processed'),
+    ('disputed', 'Disputed'),
+    ('shipped', 'Shipped'),
+    ('delivered', 'Delivered'),
+    ('pending', 'Pending'),
+    ('cancelled', 'Cancelled'),
+    ('dispatched', 'Dispatched'),
+)
+
+ATTRIBUTES = (
+    ('Kg', 'Kg'),
+    ('Piece', 'Piece')
+)
 
 class Shipping(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -16,9 +30,10 @@ class Shipping(models.Model):
 class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, default='')
-    picture = models.TextField(default='')
-    weight_attributes = models.TextField(default='')
+    picture = models.CharField(max_length=255, default='')
+    weight_attributes = models.CharField(max_length=10, choices=ATTRIBUTES, default='Kg')
     availability = models.IntegerField(default=0)
+    purchase_price = models.FloatField(default=0.0)
     price = models.FloatField(default=0.0)
 
     def __str__(self):
@@ -34,16 +49,6 @@ class Product(models.Model):
 
 
 class Invoice(models.Model):
-    INVOICE_STATUS = (
-        ('processed', 'Processed'),
-        ('disputed', 'Disputed'),
-        ('shipped', 'Shipped'),
-        ('delivered', 'Delivered'),
-        ('pending', 'Pending'),
-        ('cancelled', 'Cancelled'),
-        ('dispatched', 'Dispatched'),
-    )
-
     created = models.DateTimeField(auto_now_add=True)
     shipping = models.ForeignKey(Shipping, on_delete=models.CASCADE, related_name='shipping')
     status = models.CharField(max_length=10, choices=INVOICE_STATUS, default='processed')
