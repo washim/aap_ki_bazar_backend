@@ -16,3 +16,6 @@ class InvoiceAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('invoice', 'product', 'quantity', 'weight')
+
+admin.site.site_header = "APP KI BAZAR"
+admin.site.site_title = "APP KI BAZAR"

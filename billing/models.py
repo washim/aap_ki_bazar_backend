@@ -30,7 +30,7 @@ class Shipping(models.Model):
 class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, default='')
-    picture = models.CharField(max_length=255, default='')
+    picture = models.ImageField()
     weight_attributes = models.CharField(max_length=10, choices=ATTRIBUTES, default='Kg')
     availability = models.IntegerField(default=0)
     purchase_price = models.FloatField(default=0.0)
