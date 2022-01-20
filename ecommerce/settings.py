@@ -143,3 +143,4 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
 CSRF_TRUSTED_ORIGINS = ['https://ecommerce.nbsols.com']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
