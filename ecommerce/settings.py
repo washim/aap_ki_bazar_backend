@@ -139,3 +139,4 @@ CORS_ALLOWED_ORIGINS = [
     "https://appkibazar.nbsols.com",
     "http://localhost:8080",
 ]
+CSRF_TRUSTED_ORIGINS = ['https://ecommerce.nbsols.com']
