@@ -20,7 +20,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers, serializers, viewsets
 from billing.api import ShippingViewSet, ProductViewSet, InvoiceViewSet, OrderViewSet
-from billing import views
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,10 +41,7 @@ router.register(r'invoices', InvoiceViewSet)
 router.register(r'orders', OrderViewSet)
 
 urlpatterns = [
-    path('', include('frontadmin.urls')),
-    path('', views.listorders, name='listorders'),
-    path('vieworder/<int:pk>/', views.vieworder, name='vieworder'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

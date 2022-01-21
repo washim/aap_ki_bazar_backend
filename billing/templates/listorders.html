@@ -1,48 +1,31 @@
-{% extends "billing.html" %}
-
-{% block title %}List Orders{% endblock %}
-
-{% block content_title %}List Orders{% endblock %}
-
-{% block content_breadcrumb %}
-<ol class="breadcrumb float-sm-right">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active">List Orders</li>
-</ol>
-{% endblock %}
+{% extends "admin/base_site.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="card p-0">
-        <div class="card-header">
-            <h3 class="card-title">All customer orders given below</h3>
-        </div>
-        <div class="card-body p-0">
-            <table class="table table-sm table-striped">
-                <thead>
-                    <tr>
-                        <th style="width: 150px">Invoice ID</th>
-                        <th>Customer</th>
-                        <th>Ward No</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in orders %}
-                    <tr>
-                        <td>{{row.id}}</td>
-                        <td>{{row.shipping.name}}({{row.shipping.mobile}})</td>
-                        <td>{{row.shipping.ward_no}}</td>
-                        <td>{{row.status}}</td>
-                        <td>{{row.created}}</td>
-                        <td><a href="{% url 'vieworder' row.id %}" class="btn btn-sm btn-primary">View Items</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+<h1>List Orders</h1>
+<div class="results">
+    <table id="result_list">
+        <thead>
+            <tr>
+                <th style="width: 150px">Invoice ID</th>
+                <th>Customer</th>
+                <th>Ward No</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in orders %}
+            <tr>
+                <td>{{row.id}}</td>
+                <td>{{row.shipping.name}}({{row.shipping.mobile}})</td>
+                <td>{{row.shipping.ward_no}}</td>
+                <td>{{row.status}}</td>
+                <td>{{row.created}}</td>
+                <td><a href="{% url 'vieworder' row.id %}" class="btn btn-sm btn-primary">View Items</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

@@ -1,68 +1,52 @@
-{% extends "billing.html" %}
-
-{% block title %}View Order{% endblock %}
-
-{% block content_title %}View Order{% endblock %}
-
-{% block content_breadcrumb %}
-<ol class="breadcrumb float-sm-right">
-    <li><a href="/" class="btn btn-sm btn-warning">Download Invoice</a></li>
-</ol>
-{% endblock %}
+{% extends "admin/base_site.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="card p-0">
-            <div class="card-header">
-                <h3 class="card-title">Items Ordered</h3>
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-sm table-striped">
-                    <thead>
-                        <tr>
-                            <th style="width: 150px">ID</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Weight</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in order.items_ordered.all %}
-                        <tr>
-                            <td>{{row.id}}</td>
-                            <td>{{row.product.name}}</td>
-                            <td>{{row.quantity}}</td>
-                            <td>{{row.weight}}</td>
-                            <td>{{row.product.price}}</td>
-                            <td>{%widthratio row.quantity 1 row.product.price%}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Shipping Address</h3>
-            </div>
-            <div class="card-body">
-                <div style="font-weight: bold;">Customer Name:</div>
-                <div class="mb-3">{{order.shipping.name}}</div>
-                <div style="font-weight: bold;">Mobile:</div>
-                <div class="mb-3">{{order.shipping.mobile}}</div>
-                <div style="font-weight: bold;">Address:</div>
-                <div class="mb-3">{{order.shipping.address}}</div>
-                <div style="font-weight: bold;">Ward No:</div>
-                <div class="mb-3">{{order.shipping.ward_no}}</div>
-                <div style="font-weight: bold;">Pincode:</div>
-                <div class="mb-3">{{order.shipping.pincode}}</div>
-            </div>
-        </div>
-    </div>
-</div>
+<h1>Items Ordered</h1>
+<table style="width: 100%; margin-bottom: 30px;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Weight</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in order.items_ordered.all %}
+        <tr>
+            <td>{{row.id}}</td>
+            <td>{{row.product.name}}</td>
+            <td>{{row.quantity}}</td>
+            <td>{{row.weight}}</td>
+            <td>{{row.product.price}}</td>
+            <td>{%widthratio row.quantity 1 row.product.price%}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No record found yet</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h1>Shipping Address</h1>
+<table style="width: 100%;">
+    <thead>
+        <th>Customer name</th>
+        <th>Mobile</th>
+        <th>Address</th>
+        <th>Ward No</th>
+        <th>Pincode</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{order.shipping.name}}</td>
+            <td>{{order.shipping.mobile}}</td>
+            <td>{{order.shipping.address}}</td>
+            <td>{{order.shipping.ward_no}}</td>
+            <td>{{order.shipping.pincode}}</td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}

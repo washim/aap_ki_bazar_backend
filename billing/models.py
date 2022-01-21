@@ -26,6 +26,9 @@ class Shipping(models.Model):
     class Meta:
         ordering = ['created']
 
+    def __str__(self):
+        return str(self.id)
+
 
 class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -43,16 +46,11 @@ class Product(models.Model):
     def quantity(self):
         return 1
 
-    @property
-    def weight(self):
-        return ""
-
 
 class Invoice(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     shipping = models.ForeignKey(Shipping, on_delete=models.CASCADE, related_name='shipping')
     status = models.CharField(max_length=10, choices=INVOICE_STATUS, default='processed')
-    status_message = models.CharField(max_length=100, default='')
 
     class Meta:
         ordering = ['created']
@@ -68,4 +66,6 @@ class Order(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='invoice')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
     quantity = models.IntegerField()
-    weight = models.CharField(max_length=10, default='')
+
+    def __str__(self):
+        return str(self.id)
