@@ -54,13 +54,17 @@ class InvoiceAdmin(admin.ModelAdmin):
     def send_to_printer(self, request, queryset):
         response = HttpResponse()
         for invoice in queryset:
+            invoice_total = 0
             response.write("<div>-------------------------------------------</div>")
             response.write("<div>Invoice ID: %s</div>" % invoice.id)
             response.write("<div>Customer Details: %s, %s, %s, %s</div>" % (invoice.shipping.name, invoice.shipping.mobile, invoice.shipping.address, invoice.shipping.ward_no))
             response.write("<div>Items</div>")
             response.write("<div>-------------------------------------------</div>")
             for order in Order.objects.filter(invoice=invoice.id):
-                response.write("<div>%s x %s per %s %s %s</div>" % (order.quantity, order.product.price, order.product.weight_attributes, order.product.name, order.quantity * order.product.price))
+                total = order.quantity * order.product.price
+                invoice_total += total
+                response.write("<div>%s x %s per %s %s %s</div>" % (order.quantity, order.product.price, order.product.weight_attributes, order.product.name, total))
+            response.write("<div><b>Total:</b> %s</div>" % invoice_total)
             response.write("<div>-------------------------------------------</div>")
         return response
 
