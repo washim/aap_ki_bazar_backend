@@ -11,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('shipping', 'status', 'status_message')
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
