@@ -19,7 +19,6 @@ class ProductAdmin(admin.ModelAdmin):
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ('id', 'status', 'customer_name', 'address', 'ward', 'pincode', 'created', 'vieworder')
     list_filter = ['status']
-    list_editable = ['status']
     search_fields = ['shipping__ward_no']
     actions = ['send_to_printer']
 
