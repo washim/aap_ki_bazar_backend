@@ -60,7 +60,7 @@ class InvoiceAdmin(admin.ModelAdmin):
             response.write("<div>Items</div>")
             response.write("<div>-------------------------------------------</div>")
             for order in Order.objects.filter(invoice=invoice.id):
-                response.write("<div>%s x %s per %s</div>" % (order.quantity, order.product.price, order.product.weight_attributes))
+                response.write("<div>%s x %s per %s %s</div>" % (order.quantity, order.product.price, order.product.weight_attributes, order.product.name))
             response.write("<div>-------------------------------------------</div>")
         return response
 
