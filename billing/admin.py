@@ -1,10 +1,28 @@
 from django.contrib import admin
+from django.contrib.admin.views.main import ChangeList
 from django.urls import path
 from django.template.response import TemplateResponse
 from django.shortcuts import get_object_or_404
 from django.utils.html import format_html
 from django.http import HttpResponse
+from django.db.models import Sum, F
+from rangefilter.filters import DateRangeFilter
 from .models import Shipping, Product, Invoice, Order
+
+
+class MyChangeList(ChangeList):
+    def get_results(self, *args, **kwargs):
+        super(MyChangeList, self).get_results(*args, **kwargs)
+        total_sum = 0
+        for invoice in self.result_list.all():
+            try:
+                total_sum += Order.objects.filter(invoice=invoice.id).aggregate(tot_sum=Sum(F('product__price') * F('quantity')))['tot_sum']
+            
+            except Exception:
+                total_sum += 0
+        
+        self.total_sum = total_sum
+        self.delivery_boy_commission = self.result_list.count() * 15
 
 
 @admin.register(Shipping)
@@ -17,10 +35,17 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'status', 'customer_name', 'address', 'ward', 'pincode', 'created', 'vieworder')
-    list_filter = ['status']
-    search_fields = ['shipping__ward_no']
+    list_display = ('id', 'status', 'customer_name', 'address', 'ward', 'pincode', 'dbc', 'created', 'invoice_total', 'vieworder')
+    list_filter = [('created', DateRangeFilter), 'status', 'dbc']
+    change_list_template = 'change_list.html'
+    search_fields = ['shipping__ward_no', 'dbc']
     actions = ['send_to_printer']
+
+    def get_changelist(self, request):
+        return MyChangeList
+
+    def get_rangefilter_created_title(self, request, field_path):
+        return 'By Created Date'
 
     def get_urls(self):
         urls = super().get_urls()

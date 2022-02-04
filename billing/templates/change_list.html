@@ -1,0 +1,7 @@
+{% extends 'admin/change_list.html' %}
+{% load humanize %}
+{% block result_list %} 
+{{ block.super }} 
+<h1 style="margin-top: 30px; margin-bottom: 2px;">Total Invoice Sum: <strong>₹{{cl.total_sum|intcomma}}</strong></h1>
+<h1>Delivery Boy Commission: <strong>₹{{cl.delivery_boy_commission|intcomma}}</strong></h1>
+{% endblock %}

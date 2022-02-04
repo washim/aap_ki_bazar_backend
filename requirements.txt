@@ -2,4 +2,4 @@ django==4.0.1
 django-admin-interface==0.18.4
 djangorestframework==3.13.1
 django-cors-headers==3.11.0
-django-frontadmin
+django-admin-rangefilter==0.8.3
