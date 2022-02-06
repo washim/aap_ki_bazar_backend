@@ -103,6 +103,8 @@ class Order(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='invoice')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
     quantity = models.FloatField()
+    purchase_price = models.FloatField(default=0.0)
+    sell_price = models.FloatField(default=0.0)
 
     def __str__(self):
         return str(self.id)
