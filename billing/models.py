@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 INVOICE_STATUS = (
     ('processed', 'Processed'),
@@ -8,6 +9,11 @@ INVOICE_STATUS = (
     ('pending', 'Pending'),
     ('cancelled', 'Cancelled'),
     ('dispatched', 'Dispatched'),
+)
+
+INVOICE_TYPE = (
+    ('normal', 'Normal'),
+    ('weekly', 'Weekly Order')
 )
 
 ATTRIBUTES = (
@@ -26,6 +32,17 @@ DELIVERY_BOY_CODE = (
     ('DBC-08', 'DBC-08'),
     ('DBC-09', 'DBC-09'),
     ('DBC-10', 'DBC-10')
+)
+
+DELIVERY_WEEKLY_DAY = (
+    ('', 'No. Not required'),
+    ('Monday', 'Every Monday'),
+    ('Tuesday', 'Every Tuesday'),
+    ('Wednesday', 'Every Wednesday'),
+    ('Thursday', 'Every Thursday'),
+    ('Friday', 'Every Friday'),
+    ('Saturday', 'Every Saturday'),
+    ('Sunday', 'Every Sunday')
 )
 
 class Shipping(models.Model):
@@ -61,10 +78,12 @@ class Product(models.Model):
 
 
 class Invoice(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
     shipping = models.ForeignKey(Shipping, on_delete=models.CASCADE, related_name='shipping')
     status = models.CharField(max_length=10, choices=INVOICE_STATUS, default='processed')
+    type = models.CharField(max_length=50, choices=INVOICE_TYPE, default='normal')
+    weekly_day = models.CharField(max_length=10, choices=DELIVERY_WEEKLY_DAY, default='')
     dbc = models.CharField(max_length=10, choices=DELIVERY_BOY_CODE, default='DBC-01')
+    created = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ['created']
