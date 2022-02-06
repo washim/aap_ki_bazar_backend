@@ -1,4 +1,5 @@
 {% extends "admin/base_site.html" %}
+{% load extratags %}
 
 {% block content %}
 <h1>Items Ordered</h1>
@@ -21,7 +22,7 @@
             <td>{{row.quantity}}</td>
             <td>{{row.product.weight_attributes}}</td>
             <td>{{row.product.price}}</td>
-            <td>{%widthratio row.quantity 1 row.product.price%}</td>
+            <td>{% multiply row.quantity row.product.price %}</td>
         </tr>
         {% empty %}
         <tr>

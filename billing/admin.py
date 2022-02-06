@@ -35,8 +35,9 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'status', 'customer_name', 'address', 'ward', 'pincode', 'dbc', 'created', 'invoice_total', 'vieworder')
-    list_filter = [('created', DateRangeFilter), 'status', 'dbc']
+    list_display = ('id', 'type', 'status', 'customer_name', 'address', 'ward', 'pincode', 'dbc', 'invoice_total', 'vieworder')
+    list_filter = [('created', DateRangeFilter), 'status', 'type', 'dbc']
+    date_hierarchy = 'created'
     change_list_template = 'change_list.html'
     search_fields = ['shipping__ward_no', 'dbc']
     actions = ['send_to_printer']
