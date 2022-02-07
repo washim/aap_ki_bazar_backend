@@ -31,23 +31,55 @@
         {% endfor %}
     </tbody>
 </table>
+<h1>Order Details</h1>
+<fieldset class="module aligned">
+    <div class="form-row">
+        <label>Delivery Date:</label>
+        <div class="related-widget-wrapper">{{order.created}}</div>
+    </div>
+    <div class="form-row">
+        <label>Weekly Day:</label>
+        <div class="related-widget-wrapper">{% if order.weekly_day %}{{order.weekly_day}}{% else %}Not Applicable{% endif %}</div>
+    </div>
+</fieldset>
 <h1>Shipping Address</h1>
-<table style="width: 100%;">
-    <thead>
-        <th>Customer name</th>
-        <th>Mobile</th>
-        <th>Address</th>
-        <th>Ward No</th>
-        <th>Pincode</th>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{order.shipping.name}}</td>
-            <td>{{order.shipping.mobile}}</td>
-            <td>{{order.shipping.address}}</td>
-            <td>{{order.shipping.ward_no}}</td>
-            <td>{{order.shipping.pincode}}</td>
-        </tr>
-    </tbody>
-</table>
+<fieldset class="module aligned">
+    <div class="form-row">
+        <label>Customer Name:</label>
+        <div class="related-widget-wrapper">{{order.shipping.name}}</div>
+    </div>
+    <div class="form-row">
+        <label>Mobile:</label>
+        <div class="related-widget-wrapper">{{order.shipping.mobile}}</div>
+    </div>
+    <div class="form-row">
+        <label>Address:</label>
+        <div class="related-widget-wrapper">{{order.shipping.address}}</div>
+    </div>
+    <div class="form-row">
+        <label>Ward No:</label>
+        <div class="related-widget-wrapper">{{order.shipping.ward_no}}</div>
+    </div>
+    <div class="form-row">
+        <label>Pincode:</label>
+        <div class="related-widget-wrapper">{{order.shipping.pincode}}</div>
+    </div>
+</fieldset>
+<style>
+    .related-widget-wrapper{float: left; overflow: hidden;}
+    .aligned label {
+        display: block;
+        float: left;
+        width: 160px;
+        word-wrap: break-word;
+        font-weight: bold;
+    }
+    .form-row {
+        overflow: hidden;
+        padding: 10px;
+        font-size: 13px;
+        border-bottom: 1px solid var(--hairline-color);
+    }
+    .form-row:first-child{border-top: 1px solid var(--hairline-color);}
+</style>
 {% endblock %}
